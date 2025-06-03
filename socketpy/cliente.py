@@ -1,4 +1,4 @@
-mport socket
+import socket
 import struct
 
 def write_utf(sock, mensaje):
@@ -26,7 +26,7 @@ def read_utf(sock):
     return datos.decode('utf-8')
 
 # Datos del servidor
-HOST = '127.0.0.103'
+HOST = '127.0.0.1'
 PUERTO = 8014
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

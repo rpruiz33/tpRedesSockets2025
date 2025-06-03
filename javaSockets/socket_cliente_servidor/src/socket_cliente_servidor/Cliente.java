@@ -22,7 +22,7 @@ public class Cliente {
             boolean continuar = true;
 
             while (continuar) {
-                System.out.println("\nOpciones:");
+                System.out.println("\nOpciones: cliente java");
                 System.out.println("1. Generar nombre de usuario");
                 System.out.println("2. Generar correo electrónico");
                 System.out.println("3. Salir");

@@ -11,10 +11,10 @@ public class Servidor {
     static final String CONSONANTES = "bcdfghjklmnpqrstvwxyz";
 
     public static void main(String[] args) {
-        final int PUERTO = 2522;
+        final int PUERTO = 2566;
 
         try (ServerSocket servidor = new ServerSocket(PUERTO)) {
-            System.out.println("Servidor iniciado en el puerto " + PUERTO);
+            System.out.println("Servidor java iniciado en el puerto  " + PUERTO);
 
             while (true) {
                 System.out.println("Esperando cliente");
@@ -48,7 +48,7 @@ public class Servidor {
                             }
 
                         } else if (mensaje.equals("SALIR")) {
-                            out.writeUTF("Desconectanda");
+                            out.writeUTF("Desconectado");
                             continuar = false;
                         } else {
                             out.writeUTF("Comando no reconocido.");

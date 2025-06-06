@@ -16,6 +16,8 @@ def write_utf(sock, mensaje):# Convierte el mensaje a bytes UTF-8
  # Recibe los primeros 2 bytes, que indican la longitud del mensaje
 def read_utf(sock):
    
+   # Lee (recibe) los primeros 2 bytes del mensaje enviado por el servidor.
+   # Esos 2 bytes indican la longitud del mensaje que viene después.
     encabezado = sock.recv(2)
     if not encabezado:
         return ''  # Si no se recibe nada, retorna cadena vacía

@@ -1,37 +1,51 @@
 import socket
 import struct
 
-def write_utf(sock, mensaje):
- 
+def write_utf(sock, mensaje):# Convierte el mensaje a bytes UTF-8
     mensaje_utf8 = mensaje.encode('utf-8')
-   
-    longitud = len(mensaje_utf8)
-    encabezado = struct.pack('>H', longitud) 
+    
+    
+    longitud = len(mensaje_utf8)# Obtiene la longitud del mensaje en bytes
+    
+    
+    encabezado = struct.pack('>H', longitud)  # convierte el número en 2 bytes para decirle al servidor cuánto mide el mensaje que voy a enviar
+
+    
+    sock.sendall(encabezado + mensaje_utf8)# Envía primero la longitud y luego el mensaje codificado
  
-    sock.sendall(encabezado + mensaje_utf8)
-
+ # Recibe los primeros 2 bytes, que indican la longitud del mensaje
 def read_utf(sock):
-
+   
     encabezado = sock.recv(2)
     if not encabezado:
-        return ''
-    longitud = struct.unpack('>H', encabezado)[0]
+        return ''  # Si no se recibe nada, retorna cadena vacía
+    longitud = struct.unpack('>H', encabezado)[0]  # convierte los 2 bytes recibidos en un número. 
+    # '>H' significa que se espera un número de 2 bytes (sin signo) en orden grande primero (big-endian).
+    # [0] es porque devuelve una lista/tupla con un solo número, y tomamos ese número.
 
-    datos = b''
+    datos = b''  # crea una variable vacía para ir guardando los datos recibidos en formato binario
+
+    # Recibe hasta completar el mensaje de la longitud indicada
     while len(datos) < longitud:
         parte = sock.recv(longitud - len(datos))
         if not parte:
             break
         datos += parte
+    
+    # Decodifica los bytes recibidos a UTF-8 y retorna el mensaje como string
     return datos.decode('utf-8')
 
+# Configuración del host y puerto al que se conecta el cliente
 HOST = 'localhost'
-PUERTO = 8014
+PUERTO = 2566
 
+# Crea un socket con IPv4 (AF_INET) y protocolo TCP (SOCK_STREAM)
+# El 'with' asegura que el socket se cierre automáticamente al salir del bloque
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PUERTO))
+    s.connect((HOST, PUERTO))  # Conecta al servidor
     print("Conectado al servidor.")
 
+    # el menu mientras esta en verdadero
     while True:
         print("\n=== MENÚ ===")
         print("1. Generar nombre de usuario")
@@ -40,18 +54,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         opcion = input("Opción: ")
 
         if opcion == '1':
+            # Pide la longitud y manda el comando USERNAME con esa longitud
             longitud = input("Ingrese la longitud del nombre de usuario (5-20): ")
-            write_utf(s, f"USERNAME:{longitud}")
+            write_utf(s, f"USERNAME:{longitud}")# f de formato string
             respuesta = read_utf(s)
             print("Servidor:", respuesta)
 
         elif opcion == '2':
+            # Pide el nombre de usuario y manda el comando EMAIL con ese nombre
             nombre = input("Ingrese su nombre de usuario: ")
-            write_utf(s, f"EMAIL:{nombre}")
+            write_utf(s, f"EMAIL:{nombre}")# f de formato string
             respuesta = read_utf(s)
             print("Servidor:", respuesta)
 
         elif opcion == '3':
+            # Manda el comando SALIR para terminar la conexión
             write_utf(s, "SALIR")
             respuesta = read_utf(s)
             print("Servidor:", respuesta)

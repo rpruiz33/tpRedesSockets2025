@@ -11,7 +11,7 @@ public class Servidor {
     static final String consonantes = "bcdfghjklmnpqrstvwxyz";
 
     public static void main(String[] args) {
-        final int PUERTO = 2566;
+        final int PUERTO = 2571;
    
         try (ServerSocket servidor = new ServerSocket(PUERTO)){//crea el server con el puerto y al finalizar el bloque try , no cuando el cliente se va
         	
@@ -43,7 +43,7 @@ public class Servidor {
                         } else if (mensaje.startsWith("EMAIL:")) {//hace el substring 6 poruqe el mensaje se compone de USERNAME:  y son 6 caracteres
                         	String nombreUsuario = mensaje.substring(6).toLowerCase().replaceAll("\\s", "");//el replaze lo que hace es remplazar todos los espacion vacios de un string es una expresion regular (que busca para validar que no haya espacios en blanco)
                             if (!esNombreValido(nombreUsuario)) {
-                                out.writeUTF("Error: nombre debe tener 5-20 letras, al menos 1 vocal y 1 consonante.");;//y se lo manda al cliente por el protocolo write UTF-8 por el socket
+                                out.writeUTF("Error: nombre debe tener 5-20 letras, al menos 1 vocal y 1 consonante no puede tener numeros.");;//y se lo manda al cliente por el protocolo write UTF-8 por el socket
                             } else {
                                 String correo = nombreUsuario + obtenerDominioAleatorio();
                                 out.writeUTF("Correo generado: " + correo);;//y se lo manda al cliente por el protocolo write UTF-8 por el socket
@@ -97,7 +97,7 @@ public class Servidor {
 
     private static boolean esNombreValido(String nombre) {
         // Validación básica de longitud y solo letras
-        if (nombre.length() < 5 || nombre.length() > 20 || !nombre.matches("[a-zA-Z]+")) {//eñ nombre debe estar entre 5 y 20 y ,atchear con la expresion regular [a-zA-Z]+ que valida si hay de l a o A a la z o Z
+        if (nombre.length() < 5 || nombre.length() > 20 || !nombre.matches("[a-zA-Z]+")) {//eñ nombre debe estar entre 5 y 20 y ,matchear con la expresion regular [a-zA-Z]+ que valida si hay de la a o A a la z o Z sin numeros
             return false;
         }
 

@@ -42,8 +42,8 @@ def read_utf(sock):
 HOST = 'localhost'
 PUERTO = 2566
 
-# Crea un socket con IPv4 (AF_INET) y protocolo TCP (SOCK_STREAM)
-# El 'with' asegura que el socket se cierre automáticamente al salir del bloque
+# crea un socket con IPv4 (AF_INET) y protocolo TCP (SOCK_STREAM)
+# el 'with' asegura que el socket se cierre automáticamente al salir del bloque
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PUERTO))  # Conecta al servidor
     print("Conectado al servidor.")
@@ -57,21 +57,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         opcion = input("Opción: ")
 
         if opcion == '1':
-            # Pide la longitud y manda el comando USERNAME con esa longitud
+            # pide la longitud y manda el comando USERNAME con esa longitud
             longitud = input("Ingrese la longitud del nombre de usuario (5-20): ")
             write_utf(s, f"USERNAME:{longitud}")# f de formato string
             respuesta = read_utf(s)
             print("Servidor:", respuesta)
 
         elif opcion == '2':
-            # Pide el nombre de usuario y manda el comando EMAIL con ese nombre
+            # pide el nombre de usuario y manda el comando EMAIL con ese nombre
             nombre = input("Ingrese su nombre de usuario: ")
             write_utf(s, f"EMAIL:{nombre}")# f de formato string
             respuesta = read_utf(s)
             print("Servidor:", respuesta)
 
         elif opcion == '3':
-            # Manda el comando SALIR para terminar la conexión
+            # manda el comando SALIR para terminar la conexión
             write_utf(s, "SALIR")
             respuesta = read_utf(s)
             print("Servidor:", respuesta)

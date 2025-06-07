@@ -1,6 +1,6 @@
 import socket
 import struct
-
+#el algoritmo usa protocolo tcp , leyendo y escribiendo mensajes en formato UTF-8
 def write_utf(sock, mensaje):# Convierte el mensaje a bytes UTF-8
     mensaje_utf8 = mensaje.encode('utf-8')
     

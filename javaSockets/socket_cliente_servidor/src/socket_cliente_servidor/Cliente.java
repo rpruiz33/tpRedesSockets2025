@@ -1,5 +1,5 @@
 package socket_cliente_servidor;
-
+//el algoritmo usa protocolo tcp , leyendo y escribiendo mensajes en formato UTF-8
 import java.io.*;
 import java.net.*;//la clase socket viene incorporada desde esta libreria
 import java.util.Scanner;

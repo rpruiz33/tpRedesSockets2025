@@ -75,7 +75,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             write_utf(s, "SALIR")
             respuesta = read_utf(s)
             print("Servidor:", respuesta)
-            print("Saliendo del cliente...")
             break
 
         else:

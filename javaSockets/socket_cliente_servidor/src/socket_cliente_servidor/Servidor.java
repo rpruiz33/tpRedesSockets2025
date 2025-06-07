@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Servidor {
 
-    static final String[] dominios = {"@gmail.com", "@hotmail.com"};
+    static final String[] dominios = {"@gmail.com", "@hotmail.com"};//variables estatticas globales con e final para que no se pueda modificar
     static final String vocales = "aeiou";
     static final String consonantes = "bcdfghjklmnpqrstvwxyz";
 
@@ -70,7 +70,7 @@ public class Servidor {
 
     private static String generarNombreUsuario(int longitud) {
         Random rand = new Random();//instancia la clase ramdom que esta en la clase java.util.Random;
-        StringBuilder sb = new StringBuilder();//crea un objeto para construi texto , el StringBuilder
+        StringBuilder sb = new StringBuilder();//crea un objeto para construir texto , el StringBuilder
 
         sb.append(vocales.charAt(rand.nextInt(vocales.length())));//busca una vocal aleatoria y con append la agrega al final en sb
         sb.append(consonantes.charAt(rand.nextInt(consonantes.length())));//busca una consonante aleatoria y con appened la agrega al final
@@ -88,22 +88,42 @@ public class Servidor {
         Random rand = new Random();//crea nums aleatorios para usar posiciones aleatorias
         for (int i = 0; i < a.length; i++) {//rrecorre el array desde 0 hasta el final
             int j = rand.nextInt(a.length);//genera un aleatorio entre o y a.length
-            char temp = a[i];//hace el famoso inercambio
+            char temp = a[i];//hace el famoso intercambio
             a[i] = a[j];
             a[j] = temp;
         }
-        return new String(a);//retorna creando un nuevos string a partir dell char a
+        return new String(a);//retorna creando un nuevos string a partir del char a
     }
 
     private static boolean esNombreValido(String nombre) {
-        if (nombre.length() < 5 || nombre.length() > 20 || !nombre.matches("[a-zA-Z]+")) return false;// Valida que el nombre tenga entre 5 y 20 letras, y que solo contenga letras del alfabeto (mayúsculas o minúsculas).
-        boolean tieneVocal = nombre.chars().anyMatch(c -> vocales.indexOf(c) >= 0);//nombre.chars() convierte cada caracter a un codigo unicode, el animatchbusca si algun caracter cimple con la condicion osea true o false, llama a una funcion anonima(callback)
-        //c es un caracter que se esta recorriendo, busca si c esta dentro de la cadeno vocales si lo encuentra devuelve la pos , sino -1
-        boolean tieneConsonante = nombre.chars().anyMatch(c -> consonantes.indexOf(c) >= 0);//aca hace lo mismo pero con las consonates
-        return tieneVocal && tieneConsonante; //retorna si se cumplen las dos cosas
+        // Validación básica de longitud y solo letras
+        if (nombre.length() < 5 || nombre.length() > 20 || !nombre.matches("[a-zA-Z]+")) {//eñ nombre debe estar entre 5 y 20 y ,atchear con la expresion regular [a-zA-Z]+ que valida si hay de l a o A a la z o Z
+            return false;
+        }
+
+        boolean tieneVocal = false;
+        boolean tieneConsonante = false;
+
+        nombre = nombre.toLowerCase(); // Para comparar sin importar mayúsculas
+
+        for (int i = 0; i < nombre.length(); i++) {
+            char c = nombre.charAt(i);//va convirtiendo cada caracter de la cadena nombre hasta el tamaño de la cadena
+            if (vocales.indexOf(c) >= 0) {
+                tieneVocal = true;
+            } else if (consonantes.indexOf(c) >= 0) {
+                tieneConsonante = true;//compara y si da 0 para ariba es true sino es false
+            }
+
+            // Si ya tiene ambas, no hace falta seguir
+            if (tieneVocal && tieneConsonante) break;//si se cumplen las dos condiciones se corta el for
+        }
+
+        return tieneVocal && tieneConsonante;//retorna un true o false , dependiendo de la accion and
     }
 
+
     private static String obtenerDominioAleatorio() {
-        return dominios[new Random().nextInt(dominios.length)];//aca se le devuelve con un aleaatorio entre los dominios .length, osea o un gmail o un hotmail
+        return dominios[new Random().nextInt(dominios.length)];//aca el nexint devuelve con un aleatorio entre los dominios .length, osea o un gmail o un hotmail
+        //el nextInt devuleve un numero aleatorio entrre 0 y el largo del array que es dos , entonde las posibilidades son  0-1
     }
 }

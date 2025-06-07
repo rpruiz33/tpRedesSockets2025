@@ -14,12 +14,16 @@ public class Cliente {
         try (
             Socket socket = new Socket(HOST, PUERTO);//se conecta con el server
         		DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-        		// Se crea un canal de salida llamado "out" a partir del socket. Esto significa que "out" es un flujo por donde el cliente puede enviar datos al servidor.El método socket.getOutputStream() devuelve el flujo básico para enviar bytes,
+        		// Se crea un canal de salida llamado "out" a partir del socket. 
+        		//Esto significa que "out" es un flujo por donde el cliente puede enviar datos al servidor.
+        		//El método socket.getOutputStream() devuelve el flujo básico para enviar bytes,
         		// y DataOutputStream lo envuelve para facilitar escribir datos con writeUTF.
 
             DataInputStream in = new DataInputStream(socket.getInputStream());
-        		// Se crea un canal de entrada llamado "in" a partir del socket.Esto significa que "in" es un flujo por donde el cliente puede recibir datos que envía el servidor.
-        		//El método socket.getInputStream() devuelve el flujo básico para leer bytes, y DataInputStream lo envuelve para facilitar la lectura de datos primitivos y cadenas (por ejemplo, con readUTF).
+        		// Se crea un canal de entrada llamado "in" a partir del socket.Esto significa que "in" es un
+        		//flujo por donde el cliente puede recibir datos que envía el servidor.
+        		//El método socket.getInputStream() devuelve el flujo básico para leer bytes, y DataInputStream
+        		//lo envuelve para facilitar la lectura de datos primitivos y cadenas (por ejemplo, con readUTF).
 
             Scanner teclado = new Scanner(System.in)//seinstancia para leer de la consola lo que se manda por teclado
         ) {

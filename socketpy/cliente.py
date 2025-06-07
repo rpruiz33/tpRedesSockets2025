@@ -9,32 +9,33 @@ def write_utf(sock, mensaje):# Convierte el mensaje a bytes UTF-8
     
     
     encabezado = struct.pack('>H', longitud)  # convierte el número en 2 bytes para decirle al servidor cuánto mide el mensaje que voy a enviar
-
+    # es un protocolo de comunicación que indica la longitud del mensaje que se va a enviar
+    # '>H' significa que se espera un número de 2 bytes (sin signo) en orden grande primero (big-endian), pq estamos trabajando con java en e servidor
     
     sock.sendall(encabezado + mensaje_utf8)# Envía primero la longitud y luego el mensaje codificado
  
- # Recibe los primeros 2 bytes, que indican la longitud del mensaje
+ # recibe los primeros 2 bytes, que indican la longitud del mensaje
 def read_utf(sock):
    
-   # Lee (recibe) los primeros 2 bytes del mensaje enviado por el servidor.
-   # Esos 2 bytes indican la longitud del mensaje que viene después.
+   # lee (recibe) los primeros 2 bytes del mensaje enviado por el servidor.
+   # esos 2 bytes indican la longitud del mensaje que viene después.
     encabezado = sock.recv(2)
     if not encabezado:
-        return ''  # Si no se recibe nada, retorna cadena vacía
+        return ''  # si no se recibe nada, retorna cadena vacía
     longitud = struct.unpack('>H', encabezado)[0]  # convierte los 2 bytes recibidos en un número. 
-    # '>H' significa que se espera un número de 2 bytes (sin signo) en orden grande primero (big-endian).
-    # [0] es porque devuelve una lista/tupla con un solo número, y tomamos ese número.
+    # '>H' significa que se espera un número de 2 bytes (sin signo) en orden grande primero (big-endian). pq estamos trabajando con java en e servidor
+    # [0] es porque devuelve una lista con un solo número, y tomamos ese número.
 
     datos = b''  # crea una variable vacía para ir guardando los datos recibidos en formato binario
 
-    # Recibe hasta completar el mensaje de la longitud indicada
+    # recibe hasta completar el mensaje de la longitud indicada
     while len(datos) < longitud:
         parte = sock.recv(longitud - len(datos))
         if not parte:
             break
         datos += parte
     
-    # Decodifica los bytes recibidos a UTF-8 y retorna el mensaje como string
+    # decodifica los bytes recibidos a UTF-8 y retorna el mensaje como string
     return datos.decode('utf-8')
 
 # Configuración del host y puerto al que se conecta el cliente
@@ -49,7 +50,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
     # el menu mientras esta en verdadero
     while True:
-        print("\n=== MENÚ ===")
+        print("\n=== MENÚ ===py")
         print("1. Generar nombre de usuario")
         print("2. Generar dirección de correo electrónico")
         print("3. Salir")

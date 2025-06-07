@@ -50,7 +50,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
     # el menu mientras esta en verdadero
     while True:
-        print("\n=== MENÚ ===py")
+        print("\n*******MENÚ-python********")
         print("1. Generar nombre de usuario")
         print("2. Generar dirección de correo electrónico")
         print("3. Salir")

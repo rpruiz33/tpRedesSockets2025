@@ -10,7 +10,7 @@ public class Cliente {
 
         final String HOST = "localhost";//localhost indica donde se esta corriendo el programa
         final int PUERTO = 2566;
-
+         //el try es para abrir los recursos y los cierra cuando   termina el bloque o por exception
         try (
             Socket socket = new Socket(HOST, PUERTO);//se conecta con el server
         		DataOutputStream out = new DataOutputStream(socket.getOutputStream());

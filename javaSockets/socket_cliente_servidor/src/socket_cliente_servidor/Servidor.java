@@ -40,7 +40,7 @@ public class Servidor {
                                 out.writeUTF("Usuario generado: " + username);//y se lo manda al cliente por el protocolo write UTF-8 por el socket
                             }
 
-                        } else if (mensaje.startsWith("EMAIL:")) {//hace el substring 6 poruqe el mensaje se compone de USERNAME:  y son 6 caracteres
+                        } else if (mensaje.startsWith("EMAIL:")) {//hace el substring 6 poruqe el mensaje se compone de EMAIL:  y son 6 caracteres
                         	String nombreUsuario = mensaje.substring(6).toLowerCase().replaceAll("\\s", "");//el replaze lo que hace es remplazar todos los espacion vacios de un string es una expresion regular (que busca para validar que no haya espacios en blanco)
                             if (!esNombreValido(nombreUsuario)) {
                                 out.writeUTF("Error: nombre debe tener 5-20 letras, al menos 1 vocal y 1 consonante no puede tener numeros.");;//y se lo manda al cliente por el protocolo write UTF-8 por el socket

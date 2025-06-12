@@ -30,17 +30,15 @@ def read_utf(sock):
 
     # recibe hasta completar el mensaje de la longitud indicada
     while len(datos) < longitud:
-        parte = sock.recv(longitud - len(datos))
-        if not parte:
-            break
-        datos += parte
-    
-    # decodifica los bytes recibidos a UTF-8 y retorna el mensaje como string
-    return datos.decode('utf-8')
+        parte = sock.recv(longitud - len(datos))  # Recibe una parte de los datos faltantes
+        if not parte:  # Si no se recibió nada, probablemente se cerró la conexión
+         break
+    datos += parte  # Acumula los bytes recibidos
+
 
 # Configuración del host y puerto al que se conecta el cliente
 HOST = 'localhost'
-PUERTO = 2566
+PUERTO = 2571
 
 # crea un socket con IPv4 (AF_INET) y protocolo TCP (SOCK_STREAM)
 # el 'with' asegura que el socket se cierre automáticamente al salir del bloque
